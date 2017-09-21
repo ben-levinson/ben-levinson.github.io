@@ -6,6 +6,7 @@
         {{ site.title }}
         {% endif%}
     </title>
+
     {% if page.description %}
     <meta name="description" content="{{ page.description}}"/>
     {% endif %}
@@ -14,6 +15,7 @@
     {% if page.css %}
     <link rel="stylesheet" href="{{ site.baseurl }}{{ page.css }}"/>
     {% endif %}
+    
     <link rel="shortcut icon" type="image/x-icon" href="{{ site.baseurl }}/favicon.ico"/>
     {% if jekyll.environment == 'production' %}
     {% include analytics.html %}
