@@ -33,7 +33,7 @@ There are many different [algorithmic](https://en.wikipedia.org/wiki/Sudoku_solv
 4. If there is no valid number at this cell, delete its value and go back to the previous cell.
 
 <div id="sudoku9" style=" margin-left:100px position:relative;">
-    <script src="projects/sudoku9.js" type="text/javascript"></script>
+    <script src="/projects/sudoku9.js" type="text/javascript"></script>
 </div>
 <figcaption>
 <strong>Figure 1: </strong>Generating a Sudoku puzzle using depth-first backtracking.
