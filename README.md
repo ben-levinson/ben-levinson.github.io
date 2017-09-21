@@ -1,5 +1,4 @@
 
-![aliquam rwd](/demo.jpg)
 
 # aliquam
 
