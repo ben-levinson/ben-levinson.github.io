@@ -32,7 +32,7 @@ To put it in (relatively) simple terms, the Fourier Transform takes some input s
 The first option may be useful for analysis, but for something even remotely close to real time, option 2 is the way to go. Since a spectrogram just a plot of frequency spectrum against time, we can essentially just line up each "chunk's" spectrum to generate a spectrogram. It is pretty common in spectrograms to use color intensity to signify the amplitude of that frequency or frequency range, but I wanted to retain the typical spectrum plot and include the time dimension by offsetting the outline of the spectrum to give it a 3-dimensional look.
 
 <figure>
-<img alt="spectrogram" src="/resources/images/Spectrogram/spectrogram.png"/>
+<img alt="spectrogram" src="/resources/images/Spectrogram/Spectrogram.png"/>
 <figcaption>
 <strong>Figure 2: </strong> 3D Spectrogram
 Image Source: https://en.wikipedia.org/wiki/Spectrogram#/media/File:Spectrogram.png
@@ -88,9 +88,9 @@ The next big task was figuring out how I wanted to do graphics for this project.
 In lieu of having the oscilloscope view present in the video, I create an additional spectrogram more in the style of Foobar2000's that can be toggled on and off with the space bar. For a library aimed at making games, I found it more than a bit strange that SFML did not have any built-in debouncing for key presses, so I had to write my own debouncing logic for the toggle. Toggling the modes also changes whether the time axis is at an angle or directly along the y-axis of the window.
 
 <figure>
-<img alt="Spectrograms" src="/resources/images/Spectrogram/spectrogram-1.png"/>
-<img alt="Spectrograms" src="/resources/images/Spectrogram/spectrogram-2.png"/>
-<img alt="Spectrograms" src="/resources/images/Spectrogram/spectrogram-3.png"/>
+<img alt="Spectrograms" src="/resources/images/Spectrogram/screenshot-1.png"/>
+<img alt="Spectrograms" src="/resources/images/Spectrogram/screenshot-2.png"/>
+<img alt="Spectrograms" src="/resources/images/Spectrogram/screenshot-3.png"/>
 <figcaption>
 <strong>Figure 4: </strong> Screenshots from my Spectrogram Visualizer
 </figcaption>
