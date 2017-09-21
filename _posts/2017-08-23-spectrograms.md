@@ -4,10 +4,7 @@ title: The Fast-Fourier Transform and Spectrograms for Audio Visualization
 category: projects
 comments: false
 description: Building an Audio Visualizer
-tags:
-    - Algorithms
-    - Signals
-    - Graphics
+tags: [Algorithms, Signals, Graphics]
 ---
 
 I started playing the Clarinet in 3rd grade, the Alto Saxophone in 7th, and soon after started working sound in my high-school's AV Booth on everything from speeches to plays and large musical performances. At some point, I stumbled upon a music player called [Foobar2000](https://www.foobar2000.org/) and loved that offered the same type of audio visualizations that were available to me in the booth. However, the spectrogram visualization was by far the most interesting. I loved trying to pick out individual instruments and their overtones and harmonics.

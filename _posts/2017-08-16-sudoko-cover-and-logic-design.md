@@ -4,10 +4,7 @@ title: Sudoku, Covering Problems, and Logic Design Pt. 1
 category: projects
 comments: false
 description: Part 1 in a series on NP-Complete Problems
-tags:
-    - Algorithms
-    - Sudoku
-    - NP-Complete
+tags: [Algorithms, Sudoku, NP-Complete]
 ---
 
 Since starting college, I’ve been flying more regularly between home and school. To pass some of that time, I started doing Sudoku puzzles, but I rather quickly moved from being interested in solving the puzzles themselves to being interesting in algorithms to generate and solve them.
