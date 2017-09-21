@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>
+        
+        Using CPUID to get Processor Information
+        
+    </title>
+    
+    <meta name="description" content="Determining Support for Newer Instructions on x86"/>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="/resources/css/main.css"/>
+    
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico"/>
+    
+
+    
+    <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"> </script>
+    
+
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.2/p5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.2/addons/p5.dom.js"></script>
+</head>
+
+<body style="background: url('/resources/images/main_front.jpg') no-repeat fixed;
+                            background-size: cover">
+<div id="wrapper">
+    <header>
+
+    <nav id="main-nav">
+        <p class="title"> Ben Levinson </p>
+        <ul>
+            <li><a class="fancy-nav" href="/index.html">home</a></li>
+            
+            <li><a class="fancy-nav" href="/categories/projects">projects</a></li>
+            
+            <li><a class="fancy-nav" href="/pages/about.html">about</a></li>
+        </ul>
+    </nav>
+</header>
+
+    <main id="start">
+        <div class="articles">
+            <article>
+    <header>
+        
+        <h1>Using CPUID to get Processor Information</h1>
+        
+        <div class="post-meta">
+    <small>
+        <time datetime="28 08 2017">
+            28 August, 2017
+        </time>
+        <span class="tag-sep"> | </span>
+        
+        <nav class="tags">
+    <ul>
+        
+        <li><a href="/tags/assembly.html">Assembly</a><span>&nbsp;&nbsp;</span></li>
+        
+        <li><a href="/tags/system software.html">System Software</a><span>&nbsp;&nbsp;</span></li>
+        
+    </ul>
+</nav>
+
+    </small>
+</div>
+
+    </header>
+    <p>Chip manufacturers are constantly trying to improve the performance of their products. One way that Intel has historically accomplished this is through the inclusion of datapaths meant for certain common use cases (floating point operations in large matrices for example.) But, in order to take advantage of those datapaths, it must be supported across several layers of abstraction.</p>
+
+<p>At the level of assembly language, the Instruction Set Architecture (ISA) is essentially the Application Programming Interface (API) of the CPU - it details all the functions that are available, their inputs, and outputs. However, the adding new instructions to the ISA poses issues for backward compatibility.</p>
+
+<p>A program that would benefit from the new datapath would not have any way of determining if the computer supports the new instructions or not. Thus, the program would either choose to</p>
+<ol>
+  <li>Ignore the performance improvements and implement the task in an older manner. Or,</li>
+  <li>Use the new instructions and forgo compatibility with older hardware.</li>
+</ol>
+
+<p>Fortunately, the x86 ISA (and by extension x86-64) has a solution that allows a program to use the new instructions (if applicable) without necessarily crashing on older hardware.</p>
+
+<h2 id="the-cpuid-instruction">The CPUID Instruction</h2>
+
+<p>As the name suggests, the CPUID instruction allows a program to peer into the black box of the CPU and get some information about it and its features. However, using CPUID is a little different from the more common x86 instructions like <code class="highlighter-rouge">add</code> or <code class="highlighter-rouge">mov</code>. The CPUID instruction is a good example why x86(-64) is called a Complex Instruction Set Computer (CISC): CPUID doesn’t take any arguments, what it does is dependent on the content of registers when CPUID runs, and its output changes the values of multiple registers. <em>All in a single instruction!</em></p>
+
+<p>By using CPUID and carefully following <a href="https://www.intel.com/content/dam/www/public/us/en/documents/manuals/64-ia-32-architectures-software-developer-instruction-set-reference-manual-325383.pdf">Intel’s documentation</a> (starting on page 3-190) on setting up the input and interpreting the instruction’s output, a program can determine if it should take one code branch that uses newer technology, or if it must use another branch designed for older technology.</p>
+
+<h3 id="example-usage">Example Usage</h3>
+<p>Microsoft Visual C++ offers <a href="https://msdn.microsoft.com/en-us/library/hskdteyh.aspx">two simple wrapper functions</a> for using CPUID (see below.) Some alternative ways would be to use in-line assembly (although this is dependent on compilers) or write your own function in assembly ;)</p>
+
+<div class="env-header">Microsoft's Documentation (C++)</div>
+
+<figure class="highlight"><pre><code class="language-c--" data-lang="c++"><table style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10</pre></td><td class="code"><pre><span class="kt">void</span> <span class="n">__cpuid</span><span class="p">(</span>
+   <span class="kt">int</span> <span class="n">cpuInfo</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span>
+   <span class="kt">int</span> <span class="n">function_id</span>
+<span class="p">);</span>
+
+<span class="kt">void</span> <span class="n">__cpuidex</span><span class="p">(</span>
+   <span class="kt">int</span> <span class="n">cpuInfo</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span>
+   <span class="kt">int</span> <span class="n">function_id</span><span class="p">,</span>
+   <span class="kt">int</span> <span class="n">subfunction_id</span>
+<span class="p">);</span><span class="w">
+</span></pre></td></tr></tbody></table></code></pre></figure>
+
+<figcaption>
+Source: https://msdn.microsoft.com/en-us/library/hskdteyh.aspx.
+</figcaption>
+
+<p>To summarize from Microsoft’s documentation, the values of the registers <code class="highlighter-rouge">eax</code>, <code class="highlighter-rouge">ebx</code>, <code class="highlighter-rouge">ecx</code>, and <code class="highlighter-rouge">edx</code> and returned in the cpuInfo array. The primary input value is passed in <code class="highlighter-rouge">eax</code> as function_id. An additional input value is required to access some <code class="highlighter-rouge">CPUID</code> functionality, which is passed into <code class="highlighter-rouge">ecx</code> as subfunction_id.</p>
+
+<p>By disassembling the code, (I’ve used the 32-bit version of <a href="https://x64dbg.com/#start">x64dbg</a> here) we can get an example of how the above C++ is implemented in assembly.</p>
+
+<div class="env-header">Disassembled Code (Intel Format)</div>
+
+<figure class="highlight"><pre><code class="language-assembly" data-lang="assembly"><table style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
+2
+3
+4
+5
+6
+7</pre></td><td class="code"><pre>mov eax, 1
+xor ecx, ecx
+cpuid
+mov dword ptr ds:[esi],eax
+mov dword ptr ds:[esi+4],ebx
+mov dword ptr ds:[esi+8],ecx
+mov dword ptr ds:[esi+C],edx<span class="w">
+</span></pre></td></tr></tbody></table></code></pre></figure>
+
+<p>As expected, the assembly moves the passes the primary input in <code class="highlighter-rouge">eax</code>, sets <code class="highlighter-rouge">ecx</code> to 0 by using xor on itself, and then uses the <code class="highlighter-rouge">CPUID</code> instruction. Lines 4-7 are storing the values of <code class="highlighter-rouge">eax</code>, <code class="highlighter-rouge">ebx</code>, <code class="highlighter-rouge">ecx</code>, and <code class="highlighter-rouge">edx</code> respectively in the output array. The value of <code class="highlighter-rouge">esi</code> a pointer to the first element of the array. Indices 1, 2, and 3 are each offset by 4 bytes from the previous array index.</p>
+
+<p>For a given input, each of the four registers contains 32 bits that can be used as flags to indicate the support of a certain feature. We can mask off that bit and reference the documentation to generate a true/false list of supported features.</p>
+
+<figure>
+<img alt="features" src="/resources/images/SysInfo/supported-features.png" />
+<figcaption>
+<strong>Figure 1: </strong> Partial List of Supported Features
+</figcaption>
+</figure>
+
+<p>This type of information is most important at the level of the compiler, as it is the piece of software that must determine how to map code in high-level languages into an assembly language program that is as efficient as possible.</p>
+
+    <footer>
+        
+    </footer>
+</article>
+
+        </div>
+    </main>
+        <nav class="paginator">
+    <ul>
+        
+        
+        <li><a class="fancy-nav" href="/projects/spectrograms">&lt;&nbsp;Previous</a></li>
+        
+        <li class="sep">&nbsp;</li>
+        <li><a class="fancy-nav" href="#">Top</a></li>
+        <li class="sep">&nbsp;</li>
+        
+        
+    </ul>
+</nav>
+
+    <footer>
+        
+<!--<div id="footer-quote"> -->
+<ul class="social-links">
+    <li>
+        <a href="https://github.com/blevinson19" title="Github">
+					<img width="40px" height="40px" src="/resources/images/Contact/github.png"/>
+			</a>
+    </li>
+
+    <li>
+        <a href="https://www.linkedin.com/in/benjamin-levinson-a61905114/" title="LinkedIn">
+                        <img width="40px" height="40px" src="/resources/images/Contact/linkedin.png"/>
+                    </a>
+    </li>
+    <li>
+        <a href="mailto:benjaminlevinson2019@u.northwestern.edu" title="Mail">
+                    <img width="40px" height="40px" src="/resources/images/Contact/mail.png"/>
+                </a>
+    </li>
+</ul>
+<!--</div> -->
+
+<div id="footer-main">
+    <small>
+        &copy; 2017 Benjamin Levinson.
+    </small>
+    <small> Powered by Jekyll using  <a class="cite" href="https://github.com/grrinchas/aliquam"> Aliquam</a> theme. </small>
+
+
+</div>
+
+    </footer>
+</div>
+
+</body>
+</html>

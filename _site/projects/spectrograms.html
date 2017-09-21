@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>
+        
+        The Fast-Fourier Transform and Spectrograms for Audio Visualization
+        
+    </title>
+    
+    <meta name="description" content="Building an Audio Visualizer"/>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="/resources/css/main.css"/>
+    
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico"/>
+    
+
+    
+    <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"> </script>
+    
+
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.2/p5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.2/addons/p5.dom.js"></script>
+</head>
+
+<body style="background: url('/resources/images/main_front.jpg') no-repeat fixed;
+                            background-size: cover">
+<div id="wrapper">
+    <header>
+
+    <nav id="main-nav">
+        <p class="title"> Ben Levinson </p>
+        <ul>
+            <li><a class="fancy-nav" href="/index.html">home</a></li>
+            
+            <li><a class="fancy-nav" href="/categories/projects">projects</a></li>
+            
+            <li><a class="fancy-nav" href="/pages/about.html">about</a></li>
+        </ul>
+    </nav>
+</header>
+
+    <main id="start">
+        <div class="articles">
+            <article>
+    <header>
+        
+        <h1>The Fast-Fourier Transform and Spectrograms for Audio Visualization</h1>
+        
+        <div class="post-meta">
+    <small>
+        <time datetime="23 08 2017">
+            23 August, 2017
+        </time>
+        <span class="tag-sep"> | </span>
+        
+        <nav class="tags">
+    <ul>
+        
+        <li><a href="/tags/algorithms.html">Algorithms</a><span>&nbsp;&nbsp;</span></li>
+        
+        <li><a href="/tags/signals.html">Signals</a><span>&nbsp;&nbsp;</span></li>
+        
+        <li><a href="/tags/graphics.html">Graphics</a><span>&nbsp;&nbsp;</span></li>
+        
+    </ul>
+</nav>
+
+    </small>
+</div>
+
+    </header>
+    <p>I started playing the Clarinet in 3rd grade, the Alto Saxophone in 7th, and soon after started working sound in my high-school’s AV Booth on everything from speeches to plays and large musical performances. At some point, I stumbled upon a music player called <a href="https://www.foobar2000.org/">Foobar2000</a> and loved that offered the same type of audio visualizations that were available to me in the booth. However, the spectrogram visualization was by far the most interesting. I loved trying to pick out individual instruments and their overtones and harmonics.</p>
+
+<figure>
+<img alt="foobar-vis" src="/resources/images/Spectrogram/foobar-vis.jpg" />
+<figcaption>
+<strong>Figure 1: </strong> Foobar2000 Visualizations
+Image Source: https://www.foobar2000.org/screenshots
+</figcaption>
+</figure>
+
+<p>At the time, I had virtually no idea what it all meant, but after some discussion of Fourier Transforms in my first year of college, the math behind those visualizations started making some more sense.</p>
+
+<h2 id="the-main-idea">The Main Idea</h2>
+
+<p>To put it in (relatively) simple terms, the Fourier Transform takes some input signal and outputs the respective weights of all the frequencies that compose the signal. For some signal, you could either</p>
+<ol>
+  <li>Record the entire signal, and then generate a single spectrum. Or,</li>
+  <li>Divide the signal up into chunks, and generate a spectrum for each chunk.</li>
+</ol>
+
+<p>The first option may be useful for analysis, but for something even remotely close to real time, option 2 is the way to go. Since a spectrogram just a plot of frequency spectrum against time, we can essentially just line up each “chunk’s” spectrum to generate a spectrogram. It is pretty common in spectrograms to use color intensity to signify the amplitude of that frequency or frequency range, but I wanted to retain the typical spectrum plot and include the time dimension by offsetting the outline of the spectrum to give it a 3-dimensional look.</p>
+
+<figure>
+<img alt="spectrogram" src="/resources/images/Spectrogram/spectrogram.png" />
+<figcaption>
+<strong>Figure 2: </strong> 3D Spectrogram
+Image Source: https://en.wikipedia.org/wiki/Spectrogram#/media/File:Spectrogram.png
+</figcaption>
+</figure>
+
+<p>It’s practically trivial to generate a spectrum for an arbitrary signal in MATLAB (<a href="https://www.mathworks.com/help/matlab/examples/fft-for-spectral-analysis.html">their tutorial here</a>).</p>
+
+<figure>
+<img alt="matlab" src="/resources/images/Spectrogram/spectrum.jpg" />
+<figcaption>
+<strong>Figure 3: </strong> Using MATLAB to generate a Spectrum
+</figcaption>
+</figure>
+
+<p>However, I decided against using MATLAB because I didn’t really want to spend lots of time trying to get it to plot the way I wanted it to. Instead, I decided to use C++ and a library to help me with the graphics. While it would be pretty easy to find a C++ library to also do the Fast-Fourier Transform for me like MATLAB can, I wanted to do some research into the algorithm and implement it myself since I am taking a signals and systems class in the Fall.</p>
+
+<h2 id="fast-fourier-transform">Fast-Fourier Transform</h2>
+<p>The naive approach to computing a discrete Fourier Transform results in an algorithm with <script type="math/tex">O(N^2)</script> time complexity. The complexity can be improved to <script type="math/tex">O(N log(N))</script> by using the recursive, divide and conquer, in-place <a href="https://en.wikipedia.org/wiki/Cooley–Tukey_FFT_algorithm">Cooley-Tukey FFT algorithm</a>. Next, I found a very helpful <a href="https://stackoverflow.com/questions/28009590/understanding-the-radix-2-fft-recursive-algorithm">post</a> on Stack Overflow with the pseudocode (the Wikipedia page’s pseudocode lines up more closely with the final version of my implementation.) With the pseudocode and some useful features of C++, implementing the algorithm is pretty simple.</p>
+
+<div class="env-header">C++</div>
+
+<figure class="highlight"><pre><code class="language-c--" data-lang="c++"><table style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22</pre></td><td class="code"><pre><span class="k">typedef</span> <span class="n">std</span><span class="o">::</span><span class="n">complex</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">ComplexVal</span><span class="p">;</span> <span class="c1">//short-hand for complex&lt;double&gt; representing a+bi
+</span><span class="k">typedef</span> <span class="n">std</span><span class="o">::</span><span class="n">valarray</span><span class="o">&lt;</span><span class="n">ComplexVal</span><span class="o">&gt;</span> <span class="n">SampleArray</span><span class="p">;</span> <span class="c1">//array of complex-valued samples
+</span>
+<span class="kt">void</span> <span class="n">CooleyTukeyFFT</span><span class="o">::</span><span class="n">FFT</span><span class="p">(</span><span class="n">SampleArray</span><span class="o">&amp;</span> <span class="n">values</span><span class="p">)</span> <span class="p">{</span>
+	<span class="k">const</span> <span class="kt">size_t</span> <span class="n">N</span> <span class="o">=</span> <span class="n">values</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+	<span class="k">if</span> <span class="p">(</span><span class="n">N</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span> <span class="c1">//base-case
+</span>
+	<span class="c1">//separate the array of values into even and odd indices
+</span>	<span class="n">SampleArray</span> <span class="n">evens</span> <span class="o">=</span> <span class="n">values</span><span class="p">[</span><span class="n">std</span><span class="o">::</span><span class="n">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">N</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)];</span> <span class="c1">//slice starting at 0, N/2 elements, increment by 2
+</span>	<span class="n">SampleArray</span> <span class="n">odds</span> <span class="o">=</span> <span class="n">values</span><span class="p">[</span><span class="n">std</span><span class="o">::</span><span class="n">slice</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">N</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)];</span> <span class="c1">//slice starting at 1
+</span>
+	<span class="c1">//now call recursively
+</span>	<span class="n">FFT</span><span class="p">(</span><span class="n">evens</span><span class="p">);</span>
+	<span class="n">FFT</span><span class="p">(</span><span class="n">odds</span><span class="p">);</span>
+
+	<span class="c1">//recombine
+</span>	<span class="k">for</span><span class="p">(</span><span class="kt">size_t</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">N</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">ComplexVal</span> <span class="n">index</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">polar</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span> <span class="o">*</span> <span class="n">PI</span><span class="o">*</span><span class="n">i</span> <span class="o">/</span> <span class="n">N</span><span class="p">)</span> <span class="o">*</span> <span class="n">odds</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+		<span class="n">values</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">evens</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">index</span><span class="p">;</span>
+		<span class="n">values</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">N</span> <span class="o">/</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">evens</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">index</span><span class="p">;</span>
+	<span class="p">}</span>
+<span class="p">}</span><span class="w">
+</span></pre></td></tr></tbody></table></code></pre></figure>
+
+<p>Initially, I had written my own helper function to handle dividing the array into even and odd arrays, but I found other implementations that used type definitions to clean up the type of the array and to allow usage of slice to greatly simplify splitting the arrays. I have adopted these modifications in my version. PI is just a #define constant in my .h file.</p>
+
+<h2 id="the-graphics-library">The Graphics Library</h2>
+
+<p>The next big task was figuring out how I wanted to do graphics for this project. One of the obvious choices for graphics with C++ was to use OpenGL, but I wanted to look the internet a bit before I committed to using a library. Luckily, I found SFML (Simple and Fast Multimedia Library). SFML not only handles the graphics side of things, but also nicely encapsulates important features like playing sound in a separate thread. Then, I found a <a href="https://www.youtube.com/watch?v=LqUuMqfW1PE">YouTube video</a> demonstrating a very similar Music Visualization tool to what I wanted to build that was also written using SFML. This project was quite close to what I wanted, so I started working on building a similar visualizer in SFML.</p>
+
+<p>In lieu of having the oscilloscope view present in the video, I create an additional spectrogram more in the style of Foobar2000’s that can be toggled on and off with the space bar. For a library aimed at making games, I found it more than a bit strange that SFML did not have any built-in debouncing for key presses, so I had to write my own debouncing logic for the toggle. Toggling the modes also changes whether the time axis is at an angle or directly along the y-axis of the window.</p>
+
+<figure>
+<img alt="Spectrograms" src="/resources/images/Spectrogram/spectrogram-1.png" />
+<img alt="Spectrograms" src="/resources/images/Spectrogram/spectrogram-2.png" />
+<img alt="Spectrograms" src="/resources/images/Spectrogram/spectrogram-3.png" />
+<figcaption>
+<strong>Figure 4: </strong> Screenshots from my Spectrogram Visualizer
+</figcaption>
+</figure>
+
+<p>I do also have some code to perform the inverse FFT. It certainly will not recreate the input signal exactly, but it would be fun to write out an audio file and hear just how distorted it is.</p>
+
+    <footer>
+        
+    </footer>
+</article>
+
+        </div>
+    </main>
+        <nav class="paginator">
+    <ul>
+        
+        
+        <li><a class="fancy-nav" href="/projects/sudoko-cover-and-logic-design">&lt;&nbsp;Previous</a></li>
+        
+        <li class="sep">&nbsp;</li>
+        <li><a class="fancy-nav" href="#">Top</a></li>
+        <li class="sep">&nbsp;</li>
+        
+        <li><a class="fancy-nav" href="/projects/17-systemInfo">Next&nbsp;&gt;</a></li>
+        
+        
+    </ul>
+</nav>
+
+    <footer>
+        
+<!--<div id="footer-quote"> -->
+<ul class="social-links">
+    <li>
+        <a href="https://github.com/blevinson19" title="Github">
+					<img width="40px" height="40px" src="/resources/images/Contact/github.png"/>
+			</a>
+    </li>
+
+    <li>
+        <a href="https://www.linkedin.com/in/benjamin-levinson-a61905114/" title="LinkedIn">
+                        <img width="40px" height="40px" src="/resources/images/Contact/linkedin.png"/>
+                    </a>
+    </li>
+    <li>
+        <a href="mailto:benjaminlevinson2019@u.northwestern.edu" title="Mail">
+                    <img width="40px" height="40px" src="/resources/images/Contact/mail.png"/>
+                </a>
+    </li>
+</ul>
+<!--</div> -->
+
+<div id="footer-main">
+    <small>
+        &copy; 2017 Benjamin Levinson.
+    </small>
+    <small> Powered by Jekyll using  <a class="cite" href="https://github.com/grrinchas/aliquam"> Aliquam</a> theme. </small>
+
+
+</div>
+
+    </footer>
+</div>
+
+</body>
+</html>

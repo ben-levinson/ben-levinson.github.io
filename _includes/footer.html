@@ -1,0 +1,30 @@
+{% if site.links["enable"] %}
+<!--<div id="footer-quote"> -->
+<ul class="social-links">
+    <li>
+        <a href="https://github.com/{{ site.github_username }}" title="Github">
+					<img width="40px" height="40px" src="/resources/images/Contact/github.png"/>
+			</a>
+    </li>
+
+    <li>
+        <a href="https://www.linkedin.com/in/benjamin-levinson-a61905114/" title="LinkedIn">
+                        <img width="40px" height="40px" src="/resources/images/Contact/linkedin.png"/>
+                    </a>
+    </li>
+    <li>
+        <a href="mailto:{{ site.email }}" title="Mail">
+                    <img width="40px" height="40px" src="/resources/images/Contact/mail.png"/>
+                </a>
+    </li>
+</ul>
+<!--</div> -->
+{% endif %}
+<div id="footer-main">
+    <small>
+        &copy; 2017 {{ site.owner }}.
+    </small>
+    <small> Powered by Jekyll using  <a class="cite" href="https://github.com/grrinchas/aliquam"> Aliquam</a> theme. </small>
+
+
+</div>
