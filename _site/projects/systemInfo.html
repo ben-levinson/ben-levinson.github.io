@@ -93,7 +93,7 @@
 
 <div class="env-header">Microsoft's Documentation (C++)</div>
 
-<figure class="highlight"><pre><code class="language-c--" data-lang="c++"><table style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
+<figure class="highlight"><pre><code class="language-c--" data-lang="c++"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
 2
 3
 4
@@ -102,7 +102,8 @@
 7
 8
 9
-10</pre></td><td class="code"><pre><span class="kt">void</span> <span class="n">__cpuid</span><span class="p">(</span>
+10
+</pre></td><td class="code"><pre><span class="kt">void</span> <span class="n">__cpuid</span><span class="p">(</span>
    <span class="kt">int</span> <span class="n">cpuInfo</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span>
    <span class="kt">int</span> <span class="n">function_id</span>
 <span class="p">);</span>
@@ -111,8 +112,7 @@
    <span class="kt">int</span> <span class="n">cpuInfo</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span>
    <span class="kt">int</span> <span class="n">function_id</span><span class="p">,</span>
    <span class="kt">int</span> <span class="n">subfunction_id</span>
-<span class="p">);</span><span class="w">
-</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="p">);</span></pre></td></tr></tbody></table></code></pre></figure>
 
 <figcaption>
 Source: https://msdn.microsoft.com/en-us/library/hskdteyh.aspx.
@@ -124,20 +124,20 @@ Source: https://msdn.microsoft.com/en-us/library/hskdteyh.aspx.
 
 <div class="env-header">Disassembled Code (Intel Format)</div>
 
-<figure class="highlight"><pre><code class="language-assembly" data-lang="assembly"><table style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
+<figure class="highlight"><pre><code class="language-assembly" data-lang="assembly"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
 2
 3
 4
 5
 6
-7</pre></td><td class="code"><pre>mov eax, 1
+7
+</pre></td><td class="code"><pre>mov eax, 1
 xor ecx, ecx
 cpuid
 mov dword ptr ds:[esi],eax
 mov dword ptr ds:[esi+4],ebx
 mov dword ptr ds:[esi+8],ecx
-mov dword ptr ds:[esi+C],edx<span class="w">
-</span></pre></td></tr></tbody></table></code></pre></figure>
+mov dword ptr ds:[esi+C],edx</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>As expected, the assembly moves the passes the primary input in <code class="highlighter-rouge">eax</code>, sets <code class="highlighter-rouge">ecx</code> to 0 by using xor on itself, and then uses the <code class="highlighter-rouge">CPUID</code> instruction. Lines 4-7 are storing the values of <code class="highlighter-rouge">eax</code>, <code class="highlighter-rouge">ebx</code>, <code class="highlighter-rouge">ecx</code>, and <code class="highlighter-rouge">edx</code> respectively in the output array. The value of <code class="highlighter-rouge">esi</code> a pointer to the first element of the array. Indices 1, 2, and 3 are each offset by 4 bytes from the previous array index.</p>
 
