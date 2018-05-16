@@ -13,6 +13,10 @@
 <lastmod>2017-08-28T00:00:00-05:00</lastmod>
 </url>
 <url>
+<loc>https://localhost:4000/projects/comparing-knn-svm-mnist</loc>
+<lastmod>2017-12-20T00:00:00-06:00</lastmod>
+</url>
+<url>
 <loc>https://localhost:4000/pages/about</loc>
 </url>
 <url>
@@ -29,6 +33,9 @@
 </url>
 <url>
 <loc>https://localhost:4000/</loc>
+</url>
+<url>
+<loc>https://localhost:4000/tags/machine%20learning</loc>
 </url>
 <url>
 <loc>https://localhost:4000/tags/np-complete</loc>

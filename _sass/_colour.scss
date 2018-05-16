@@ -228,7 +228,7 @@ article > h6,
 .definition,
 .warning,
 .table tbody tr:nth-child(2n) {
-  background-color: $color-warning;
+  background-color: $color-white;
 }
 
 
@@ -242,7 +242,7 @@ article > h6,
 .table td,
 .table th,
 .warning{
-  border-color: $color-warning-dark;
+  border-color: $color-paginator;
 }
 
 //---------------------------BACKGROUND

@@ -32,7 +32,7 @@ There are many different [algorithmic](https://en.wikipedia.org/wiki/Sudoku_solv
 3. If there are no valid numbers, go back to the previous cell and place the next smallest valid number.
 4. If there is no valid number at this cell, delete its value and go back to the previous cell.
 
-<div id="sudoku9" style=" margin-left:100px position:relative;">
+<div id="sudoku9" style=" margin-left:13rem; margin-right:13rem">
     <script src="/projects/sudoku9.js" type="text/javascript"></script>
 </div>
 <figcaption>
