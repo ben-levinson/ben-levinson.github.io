@@ -33,7 +33,7 @@ url: https://blevinson19.github.io
 baseurl:
 
 # Change this to your google analytics ID
-google_analytics:
+google_analytics: UA-126409656-1
 
 # Contact form pupublic key
 contact_PK: c44344d4c57a1c0a08b46feb875ef50e
