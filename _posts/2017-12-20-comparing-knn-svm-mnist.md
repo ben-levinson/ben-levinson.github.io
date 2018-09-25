@@ -118,7 +118,7 @@ While 2.82% error is fairly good, it would be helpful to know if the testing ima
     </figcaption>
 </figure>
 
-As anticipated, a significant proportion of the images that appear in the above plot are relatively similar in appearance to other numbers. There are multiple images that would even be reasonable for a human to misclassify if it were given randomly (for example,some of the 9s in the second to last row.) However, these lists as well as the confusion matrix reveal that there is not a significant trend in the misclassification. With the exception of 4 and 9, it seems that there is not a regular pattern in the predicted class when an image is misclassified.
+As anticipated, a significant proportion of the images that appear in the above plot are relatively similar in appearance to other numbers. There are multiple images that would even be reasonable for a human to misclassify if it were given randomly (for example: some of the 9s in the second to last row.) However, these lists as well as the confusion matrix reveal that there is not a significant trend in the misclassification. With the exception of 4 and 9, it seems that there is not a regular pattern in the predicted class when an image is misclassified.
 
 #### Determination of KNN Hyperparameter
 For the KNN classifier, the same setup of evaluating training set size was used. Initially, 5 neighbors (K=5) and a testing size of 1000 images from each number were used, resulting in a total of 10,000 testing images. The size of the training set was from 100-4000 images for each number 0-9 and the error rate was measured. The result is shown in the graph below.

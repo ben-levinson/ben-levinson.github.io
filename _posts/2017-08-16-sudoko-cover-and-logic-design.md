@@ -1,9 +1,9 @@
 ---
 layout: post
-title: Sudoku, Covering Problems, and Logic Design Pt. 1
+title: Sudoku, Covering Problems, and Logic Design
 category: projects
 comments: false
-description: Part 1 in a series on NP-Complete Problems
+description: How Sudoku relates to Electronics Design
 tags: [Algorithms, Sudoku, NP-Complete]
 ---
 
