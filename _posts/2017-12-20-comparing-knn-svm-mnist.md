@@ -7,7 +7,7 @@ description: Nearest Neighbor, Support Vector Machines, and Boosting based class
 tags: [Algorithms, Machine Learning]
 ---
 
-This is a adaptation of a report (with some modfications) from my Machine Learning class this Fall.
+This is a adaptation of a report written in collaboration with Louisa Lee (with some modfications) from my Machine Learning class in Fall 2017.
 
 ## Introduction
 

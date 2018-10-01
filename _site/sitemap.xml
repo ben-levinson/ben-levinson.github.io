@@ -17,6 +17,13 @@
 <lastmod>2017-12-20T00:00:00-06:00</lastmod>
 </url>
 <url>
+<loc>https://blevinson19.github.io/projects/sorting-in-parallel</loc>
+<lastmod>2018-09-14T00:00:00-05:00</lastmod>
+</url>
+<url>
+<loc>https://blevinson19.github.io/tags/MPI</loc>
+</url>
+<url>
 <loc>https://blevinson19.github.io/pages/about</loc>
 </url>
 <url>
@@ -24,6 +31,9 @@
 </url>
 <url>
 <loc>https://blevinson19.github.io/tags/assembly</loc>
+</url>
+<url>
+<loc>https://blevinson19.github.io/tags/computer%20architecture</loc>
 </url>
 <url>
 <loc>https://blevinson19.github.io/tags/graphics</loc>
@@ -39,6 +49,9 @@
 </url>
 <url>
 <loc>https://blevinson19.github.io/tags/np-complete</loc>
+</url>
+<url>
+<loc>https://blevinson19.github.io/tags/parallelism</loc>
 </url>
 <url>
 <loc>https://blevinson19.github.io/categories/projects</loc>

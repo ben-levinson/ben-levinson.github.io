@@ -188,7 +188,7 @@ article > h4 {
 
 //---------------------------BASELINE-DOUBLE=*2
 article:not(.preview) h2 {
-  padding-top: $l-h-baseline-double * 2;
+  padding-top: $l-h-baseline-double;
 }
 
 //---------------------------MISC
@@ -234,7 +234,7 @@ article > ol {
 
 //---------------------------BASELINE-DOUBLE=*2
 article header h1 {
-  padding-bottom: $l-h-baseline-double *2;
+  padding-bottom: $l-h-baseline-double;
 }
 
 //---------------------------NONE
