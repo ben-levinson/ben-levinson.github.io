@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
+<loc>https://blevinson19.github.io/projects/IoT-webcam</loc>
+<lastmod>2017-06-25T00:00:00-05:00</lastmod>
+</url>
+<url>
 <loc>https://blevinson19.github.io/projects/sudoko-cover-and-logic-design</loc>
 <lastmod>2017-08-16T00:00:00-05:00</lastmod>
 </url>
@@ -19,6 +23,9 @@
 <url>
 <loc>https://blevinson19.github.io/projects/sorting-in-parallel</loc>
 <lastmod>2018-09-14T00:00:00-05:00</lastmod>
+</url>
+<url>
+<loc>https://blevinson19.github.io/tags/IoT</loc>
 </url>
 <url>
 <loc>https://blevinson19.github.io/tags/MPI</loc>

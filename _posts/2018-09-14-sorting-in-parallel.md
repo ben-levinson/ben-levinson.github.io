@@ -28,7 +28,7 @@ Sorting data is a very common topic in Computer Science classes, so I'm not goin
 Mergesort is typically written as a recursive function which creates a binary tree in the call-stack as shown in the image below from [this Techie Delight tutorial on Mergesort](http://www.techiedelight.com/merge-sort/).
 
 <figure>
-<img alt="features" src="/resources/images/ParallelMergesort/Merge-sort-Tutorial.png"/>
+<img alt="features" src="/resources/images/ParallelMergesort/Merge-Sort-Tutorial.png"/>
 <figcaption>
 <strong>Figure 1: </strong> Visualization of Mergesort operation
 </figcaption>

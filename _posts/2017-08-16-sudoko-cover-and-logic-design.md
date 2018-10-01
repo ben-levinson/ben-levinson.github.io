@@ -63,3 +63,6 @@ To further illustrate the limitations of the depth-first solution, I extended th
 </figure>
 
 Although "Hexadecimal" Sudoku may be rather useless, there are many engineering tasks that require solutions to large NP-Complete problems.
+
+## Digital Logic Design
+Sudoku is an example of an exact covering problem, but in terms of Digital Logic Design, solutions for unate (for logic minimization) and binate (for technology mapping) are extremely important steps in logic synthesis. 
