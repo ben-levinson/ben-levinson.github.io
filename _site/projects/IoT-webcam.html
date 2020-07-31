@@ -16,18 +16,6 @@
 
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.png"/>
     
-    <script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-126409656-1', 'auto');
-  ga('send', 'pageview');
-
-</script>
-
-    
 
     
     <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"> </script>
@@ -156,7 +144,8 @@
 #define CAM_D5				 PIO_PA29_IDX
 #define CAM_D6				 PIO_PA30_IDX
 #define CAM_D7				 PIO_PA31_IDX
-#define CAM_DATA_BUS_FLAGS              (PIO_INPUT | PIO_PULLUP)</span></pre></td></tr></tbody></table></code></pre></figure>
+#define CAM_DATA_BUS_FLAGS              (PIO_INPUT | PIO_PULLUP)</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>The init.c file is largely responsible for calling built-in initialization functions that use the pin definitions from conf_board.h as input parameters. Some example code for the camera data lines is shown below.</p>
 
@@ -178,22 +167,23 @@
 14
 15
 16
-</pre></td><td class="code"><pre><span class="c1">// PA24: CAMERA D0
-</span><span class="n">gpio_configure_pin</span><span class="p">(</span><span class="n">CAM_D0</span><span class="p">,</span> <span class="n">CAM_DATA_BUS_FLAGS</span><span class="p">);</span>
-<span class="c1">// PA25: CAMERA D1
-</span><span class="n">gpio_configure_pin</span><span class="p">(</span><span class="n">CAM_D1</span><span class="p">,</span> <span class="n">CAM_DATA_BUS_FLAGS</span><span class="p">);</span>
-<span class="c1">// PA26: CAMERA D2
-</span><span class="n">gpio_configure_pin</span><span class="p">(</span><span class="n">CAM_D2</span><span class="p">,</span> <span class="n">CAM_DATA_BUS_FLAGS</span><span class="p">);</span>
-<span class="c1">// PA27: CAMERA D3
-</span><span class="n">gpio_configure_pin</span><span class="p">(</span><span class="n">CAM_D3</span><span class="p">,</span> <span class="n">CAM_DATA_BUS_FLAGS</span><span class="p">);</span>
-<span class="c1">// PA28: CAMERA D4
-</span><span class="n">gpio_configure_pin</span><span class="p">(</span><span class="n">CAM_D4</span><span class="p">,</span> <span class="n">CAM_DATA_BUS_FLAGS</span><span class="p">);</span>
-<span class="c1">// PA29: CAMERA D5
-</span><span class="n">gpio_configure_pin</span><span class="p">(</span><span class="n">CAM_D5</span><span class="p">,</span> <span class="n">CAM_DATA_BUS_FLAGS</span><span class="p">);</span>
-<span class="c1">// PA30: CAMERA D6
-</span><span class="n">gpio_configure_pin</span><span class="p">(</span><span class="n">CAM_D6</span><span class="p">,</span> <span class="n">CAM_DATA_BUS_FLAGS</span><span class="p">);</span>
-<span class="c1">// PA31: CAMERA D7
-</span><span class="n">gpio_configure_pin</span><span class="p">(</span><span class="n">CAM_D7</span><span class="p">,</span> <span class="n">CAM_DATA_BUS_FLAGS</span><span class="p">);</span></pre></td></tr></tbody></table></code></pre></figure>
+</pre></td><td class="code"><pre><span class="c1">// PA24: CAMERA D0</span>
+<span class="n">gpio_configure_pin</span><span class="p">(</span><span class="n">CAM_D0</span><span class="p">,</span> <span class="n">CAM_DATA_BUS_FLAGS</span><span class="p">);</span>
+<span class="c1">// PA25: CAMERA D1</span>
+<span class="n">gpio_configure_pin</span><span class="p">(</span><span class="n">CAM_D1</span><span class="p">,</span> <span class="n">CAM_DATA_BUS_FLAGS</span><span class="p">);</span>
+<span class="c1">// PA26: CAMERA D2</span>
+<span class="n">gpio_configure_pin</span><span class="p">(</span><span class="n">CAM_D2</span><span class="p">,</span> <span class="n">CAM_DATA_BUS_FLAGS</span><span class="p">);</span>
+<span class="c1">// PA27: CAMERA D3</span>
+<span class="n">gpio_configure_pin</span><span class="p">(</span><span class="n">CAM_D3</span><span class="p">,</span> <span class="n">CAM_DATA_BUS_FLAGS</span><span class="p">);</span>
+<span class="c1">// PA28: CAMERA D4</span>
+<span class="n">gpio_configure_pin</span><span class="p">(</span><span class="n">CAM_D4</span><span class="p">,</span> <span class="n">CAM_DATA_BUS_FLAGS</span><span class="p">);</span>
+<span class="c1">// PA29: CAMERA D5</span>
+<span class="n">gpio_configure_pin</span><span class="p">(</span><span class="n">CAM_D5</span><span class="p">,</span> <span class="n">CAM_DATA_BUS_FLAGS</span><span class="p">);</span>
+<span class="c1">// PA30: CAMERA D6</span>
+<span class="n">gpio_configure_pin</span><span class="p">(</span><span class="n">CAM_D6</span><span class="p">,</span> <span class="n">CAM_DATA_BUS_FLAGS</span><span class="p">);</span>
+<span class="c1">// PA31: CAMERA D7</span>
+<span class="n">gpio_configure_pin</span><span class="p">(</span><span class="n">CAM_D7</span><span class="p">,</span> <span class="n">CAM_DATA_BUS_FLAGS</span><span class="p">);</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <h3 id="the-camera">The camera</h3>
 <p>The camera.c file was responsible for the implementation of the functions required to communicate and store information from the OV2640 camera module. There are several initialization and configuration functions as well as functions to record data from the camera and do some initial processing. Much of the input/output code for the setup of the two wire interface (I2C) and the vsync interrupts required minimal changes from the example project provided by Atmel Studio.</p>
@@ -205,7 +195,8 @@
 <figure class="highlight"><pre><code class="language-c" data-lang="c"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
 2
 </pre></td><td class="code"><pre><span class="cp">#define buf_size 100000
-</span><span class="kt">uint8_t</span> <span class="n">g_p_uc_cap_dest_buf</span><span class="p">[</span><span class="n">buf_size</span><span class="p">];</span></pre></td></tr></tbody></table></code></pre></figure>
+</span><span class="kt">uint8_t</span> <span class="n">g_p_uc_cap_dest_buf</span><span class="p">[</span><span class="n">buf_size</span><span class="p">];</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>However, due to having another (overly large) buffer for the responses from the wifi chip, we encountered memory issues at compile time stating that there would not be sufficient memory on the stack for the buffer. We decided to try dynamically allocating memory on the heap for the buffer using malloc and free. Using this method we were able to receive data from the camera; however, it significantly over-complicated the problem. Reduction of the size of the wifi response buffer solved this issue and allowed us to go back to a far simpler buffer.</p>
 
@@ -266,9 +257,9 @@
 			<span class="n">mem_pos</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
 			<span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="n">mem_pos</span> <span class="o">==</span> <span class="mh">0xD8</span><span class="p">)</span> <span class="p">{</span>
 				<span class="n">SOI</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
-				<span class="n">g_p_uc_cap_dest_start</span> <span class="o">=</span> <span class="n">mem_pos</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="c1">//find the starting location
-</span>				<span class="k">break</span><span class="p">;</span> <span class="c1">// error: SOI not found yet
-</span>			<span class="p">}</span>
+				<span class="n">g_p_uc_cap_dest_start</span> <span class="o">=</span> <span class="n">mem_pos</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="c1">//find the starting location</span>
+				<span class="k">break</span><span class="p">;</span> <span class="c1">// error: SOI not found yet</span>
+			<span class="p">}</span>
 		<span class="p">}</span>
 		<span class="n">mem_pos</span><span class="o">++</span><span class="p">;</span>
 		<span class="n">count</span><span class="o">--</span><span class="p">;</span>
@@ -276,25 +267,26 @@
     <span class="k">if</span><span class="p">(</span><span class="n">SOI</span> <span class="o">==</span> <span class="nb">false</span><span class="p">)</span> <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
     <span class="k">while</span> <span class="p">(</span><span class="o">!</span><span class="n">found_len</span><span class="p">)</span>
     <span class="p">{</span>
-      <span class="c1">// Check the next byte for ff flag
-</span>      <span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="n">mem_pos</span> <span class="o">==</span> <span class="mh">0xFF</span><span class="p">)</span>
+      <span class="c1">// Check the next byte for ff flag</span>
+      <span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="n">mem_pos</span> <span class="o">==</span> <span class="mh">0xFF</span><span class="p">)</span>
       <span class="p">{</span>
         <span class="n">mem_pos</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
         <span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="n">mem_pos</span> <span class="o">==</span> <span class="mh">0xD9</span><span class="p">)</span>
  	 <span class="p">{</span>
           <span class="n">Found_len</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
           <span class="n">jpeg_image_length</span> <span class="o">=</span> <span class="n">mem_pos</span> <span class="o">-</span> <span class="n">g_p_uc_cap_dest_start</span><span class="p">;</span>
-          <span class="k">return</span> <span class="mi">1</span><span class="p">;</span> <span class="c1">// Success: EOI found
-</span>        <span class="p">}</span>
+          <span class="k">return</span> <span class="mi">1</span><span class="p">;</span> <span class="c1">// Success: EOI found</span>
+        <span class="p">}</span>
         <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="n">mem_pos</span> <span class="o">==</span> <span class="mh">0xD8</span><span class="p">)</span>
 <span class="p">{</span>
-          <span class="k">return</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">// error: SOI found before EOI
-</span>        <span class="p">}</span>
+          <span class="k">return</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">// error: SOI found before EOI</span>
+        <span class="p">}</span>
         <span class="k">else</span> <span class="n">mem_pos</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
       <span class="p">}</span>
-      <span class="n">mem_pos</span><span class="o">++</span><span class="p">;</span> <span class="c1">//not a flag, check next;
-</span>  <span class="p">}</span>
-<span class="p">}</span></pre></td></tr></tbody></table></code></pre></figure>
+      <span class="n">mem_pos</span><span class="o">++</span><span class="p">;</span> <span class="c1">//not a flag, check next;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <h3 id="wifi">Wifi</h3>
 <p>Wifi.c (and its .h file) are responsible for the communication (over USART) between the Zentri AMW004 wifi chip and the MCU. As in the camera.c and camera.h files, there are several configuration functions and interrupt handlers that require relatively few changes from the example code available across several of the example projects.</p>
@@ -348,7 +340,8 @@
 		<span class="n">counts</span><span class="o">++</span><span class="p">;</span>
 		<span class="n">delay_ms</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span>
 	 <span class="p">}</span>
-<span class="p">}</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Another critical function in the wifi.c file is write_image_to_file(). This function needs to use the command API to write the entire JPEG image captured from the camera to the wifi chip. This function first checks that the image is a valid JPEG, and then proceeds to delete the old image and create a new file of the new image’s length. To pass the image length into the command string, sprintf was used. Then, the image can be written from the MCU to the wifi chip one byte at a time by using the starting address and ending address of the image that were saved in the find_image_length function.</p>
 
@@ -382,8 +375,8 @@
 	<span class="p">}</span>
 	<span class="kt">char</span><span class="o">*</span> <span class="n">delete_cmd</span> <span class="o">=</span> <span class="s">"file_delete webcam/images/img.jpg</span><span class="se">\r\n</span><span class="s">"</span><span class="p">;</span>
 	<span class="kt">uint8_t</span> <span class="n">cmd_length</span> <span class="o">=</span> <span class="mi">39</span><span class="p">;</span>
-	<span class="kt">char</span> <span class="n">new_cmd</span><span class="p">[</span><span class="n">cmd_length</span><span class="p">];</span><span class="c1">// = "file_create img.jpg  \r\n";
-</span>
+	<span class="kt">char</span> <span class="n">new_cmd</span><span class="p">[</span><span class="n">cmd_length</span><span class="p">];</span><span class="c1">// = "file_create img.jpg  \r\n";</span>
+
 	<span class="n">sprintf</span><span class="p">(</span><span class="n">new_cmd</span><span class="p">,</span><span class="s">"file_create webcam/images/img.jpg %d</span><span class="se">\r\n</span><span class="s">"</span><span class="p">,</span> <span class="n">jpeg_image_length</span><span class="p">);</span>
 	<span class="n">write_wifi_command</span><span class="p">(</span><span class="n">delete_cmd</span><span class="p">,</span> <span class="n">TIMEOUT</span><span class="p">);</span>
 	<span class="n">write_wifi_command</span><span class="p">(</span><span class="n">new_cmd</span><span class="p">,</span> <span class="n">TIMEOUT</span><span class="p">);</span>
@@ -393,7 +386,8 @@
 	<span class="p">{</span>
 		<span class="n">usart_putchar</span><span class="p">(</span><span class="n">BOARD_USART</span><span class="p">,</span> <span class="o">*</span><span class="n">i</span><span class="p">);</span>
 	<span class="p">}</span>
-<span class="p">}</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Processing the wifi chip’s response is another important task that was implemented in the wifi.c file. When the wifi chip completes a command, there is a rising edge on PA10 (GPIO_1 of the Wifi), it sends a response over USART. Each byte that arrives gets stored in the input_line_wifi buffer. When the command is complete, an interrupt for the MCU is generated, and it calls the process_data_wifi function. Process_data_wifi checks the contents of the buffer against a number of potential responses (including “Set OK”, “Unknown command”, “Success”, “Invalid argument”, “File created”, etc) and sets the appropriate flags and variables to indicate this result.</p>
 

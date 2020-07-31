@@ -16,18 +16,6 @@
 
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.png"/>
     
-    <script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-126409656-1', 'auto');
-  ga('send', 'pageview');
-
-</script>
-
-    
 
     
     <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"> </script>
@@ -101,7 +89,7 @@
 
 <ol>
   <li>Mergesort lends itself easily to parallelization because it is a divide-and-Conquer algorithm.</li>
-  <li>Our main goal was to show a performance improvement at many different problem sizes, and mergesort’s computational complexity (best, worst, and average) is <script type="math/tex">O(n logn)</script>. In order to achieve this performance profile, mergesort trades off in terms of memory space, but this was not a concern for our application.</li>
+  <li>Our main goal was to show a performance improvement at many different problem sizes, and mergesort’s computational complexity (best, worst, and average) is \(O(n logn)\). In order to achieve this performance profile, mergesort trades off in terms of memory space, but this was not a concern for our application.</li>
   <li>Mergesort is very easy to visualize, and is pretty simple to write.</li>
 </ol>
 
@@ -182,19 +170,19 @@
     <span class="n">start</span> <span class="o">=</span> <span class="n">myid</span> <span class="o">*</span> <span class="n">elements_per_proc</span><span class="p">;</span>
     <span class="n">end</span> <span class="o">=</span> <span class="p">(</span><span class="n">myid</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">elements_per_proc</span><span class="p">;</span>
 
-    <span class="c1">//mergesort_helper handles the divide portion in parallel
-</span>    <span class="n">mergesort_helper</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">arr</span><span class="p">);</span>
+    <span class="c1">//mergesort_helper handles the divide portion in parallel</span>
+    <span class="n">mergesort_helper</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">arr</span><span class="p">);</span>
     <span class="n">move_data</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">arr_out</span><span class="p">);</span>
 
     <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
     <span class="n">MPI_Status</span> <span class="n">recv_status</span><span class="p">;</span>
     <span class="kt">int</span> <span class="n">index_change</span> <span class="o">=</span> <span class="n">elements_per_proc</span><span class="p">;</span>
 
-    <span class="c1">//Merge them back together in log2 steps
-</span>    <span class="k">while</span><span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span><span class="p">)</span><span class="n">log2</span><span class="p">(</span><span class="n">numprocs</span><span class="p">))</span> <span class="c1">//merge among all processors
-</span>    <span class="p">{</span>
-        <span class="c1">//destination of where to send is 2^i, where i is the number of iterations
-</span>        <span class="k">if</span> <span class="p">(</span><span class="n">myid</span> <span class="o">%</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span><span class="p">)</span><span class="n">pow</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="c1">//Merge them back together in log2 steps</span>
+    <span class="k">while</span><span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span><span class="p">)</span><span class="n">log2</span><span class="p">(</span><span class="n">numprocs</span><span class="p">))</span> <span class="c1">//merge among all processors</span>
+    <span class="p">{</span>
+        <span class="c1">//destination of where to send is 2^i, where i is the number of iterations</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">myid</span> <span class="o">%</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span><span class="p">)</span><span class="n">pow</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
         <span class="p">{</span>
             <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">sender</span> <span class="o">=</span> <span class="n">myid</span> <span class="o">+</span> <span class="n">pow</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">i</span><span class="p">);</span>
             <span class="n">MPI_Recv</span><span class="p">((</span><span class="kt">void</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="p">(</span><span class="n">arr_out</span><span class="p">[</span><span class="n">end</span><span class="p">]),</span> <span class="n">elements_per_proc</span><span class="o">*</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">pow</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">i</span><span class="p">),</span> <span class="n">MPI_INT</span><span class="p">,</span> <span class="n">sender</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">MPI_COMM_WORLD</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">recv_status</span><span class="p">);</span>
@@ -203,8 +191,8 @@
             <span class="n">index_change</span> <span class="o">&lt;&lt;=</span> <span class="mi">1</span><span class="p">;</span>
             <span class="n">merge</span><span class="p">(</span><span class="n">arr_out</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="p">((</span><span class="n">start</span><span class="o">+</span><span class="n">end</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">));</span>
         <span class="p">}</span>
-        <span class="k">else</span> <span class="c1">//the processor is a sender
-</span>        <span class="p">{</span>
+        <span class="k">else</span> <span class="c1">//the processor is a sender</span>
+        <span class="p">{</span>
             <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">receiver</span> <span class="o">=</span> <span class="n">myid</span> <span class="o">-</span> <span class="n">pow</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">i</span><span class="p">);</span>
             <span class="n">MPI_Send</span><span class="p">((</span><span class="kt">void</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="p">(</span><span class="n">arr_out</span><span class="p">[</span><span class="n">start</span><span class="p">]),</span> <span class="n">elements_per_proc</span><span class="o">*</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">pow</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">i</span><span class="p">),</span> <span class="n">MPI_INT</span><span class="p">,</span> <span class="n">receiver</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">MPI_COMM_WORLD</span><span class="p">);</span>
 
@@ -213,7 +201,8 @@
 
         <span class="n">i</span><span class="o">++</span><span class="p">;</span>
     <span class="p">}</span>
-<span class="p">}</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>This functions manages the single threaded Mergesort. If a processor is assigned more than 2 elements, it will recursively divide and merge the input array until the processor has sorted its work allocation.</p>
 <div class="env-header"> Recursive Function to divide the problem (C) </div>
@@ -243,7 +232,8 @@
 
         <span class="n">merge</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">middle</span><span class="p">);</span>
     <span class="p">}</span>
-<span class="p">}</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>The merge function is the sorting actually happens, and unchanged from a typical single-threaded implementation. An array of two sorted halfs are given as input and the halves are copied into temporary arrays so as to not overwrite the values. As long as there are items in both halves, the two top items are compared. The first item is taken and placed into the sorted array.</p>
 
@@ -310,17 +300,17 @@
 58
 </pre></td><td class="code"><pre><span class="kt">void</span> <span class="nf">merge</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span><span class="o">*</span> <span class="n">arr</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">start</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">end</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">middle</span><span class="p">)</span>
 <span class="p">{</span>
-    <span class="c1">//find the size of the left subarray and right subarray
-</span>    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">left_array_size</span> <span class="o">=</span> <span class="n">middle</span> <span class="o">-</span> <span class="n">start</span><span class="p">;</span>
+    <span class="c1">//find the size of the left subarray and right subarray</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">left_array_size</span> <span class="o">=</span> <span class="n">middle</span> <span class="o">-</span> <span class="n">start</span><span class="p">;</span>
     <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">right_array_size</span> <span class="o">=</span> <span class="n">end</span><span class="o">-</span><span class="n">middle</span><span class="p">;</span>
 
-    <span class="c1">//declare temporary arrays for the sub-arrays
-</span>    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">arr_left</span><span class="p">[</span><span class="n">left_array_size</span><span class="p">];</span>
+    <span class="c1">//declare temporary arrays for the sub-arrays</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">arr_left</span><span class="p">[</span><span class="n">left_array_size</span><span class="p">];</span>
     <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">arr_right</span><span class="p">[</span><span class="n">right_array_size</span><span class="p">];</span>
 
     <span class="kt">int</span> <span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">;</span>
-    <span class="c1">//load values into temporary arrays
-</span>    <span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">left_array_size</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+    <span class="c1">//load values into temporary arrays</span>
+    <span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">left_array_size</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="n">arr_left</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">arr</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">start</span><span class="p">];</span>
     <span class="p">}</span>
@@ -333,39 +323,40 @@
     <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">sorted_posn</span> <span class="o">=</span> <span class="n">start</span><span class="p">;</span>
     <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">left</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
     <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">mid</span> <span class="o">=</span> <span class="mi">0</span> <span class="p">;</span>
-    <span class="c1">//look at the head of both piles, take the element that should come first and place in the output array. Increment the index in the pile that was taken.
-</span>    <span class="k">while</span><span class="p">(</span><span class="n">left</span> <span class="o">&lt;</span> <span class="n">left_array_size</span> <span class="o">&amp;&amp;</span> <span class="n">mid</span> <span class="o">&lt;</span> <span class="n">right_array_size</span><span class="p">)</span>
+    <span class="c1">//look at the head of both piles, take the element that should come first and place in the output array. Increment the index in the pile that was taken.</span>
+    <span class="k">while</span><span class="p">(</span><span class="n">left</span> <span class="o">&lt;</span> <span class="n">left_array_size</span> <span class="o">&amp;&amp;</span> <span class="n">mid</span> <span class="o">&lt;</span> <span class="n">right_array_size</span><span class="p">)</span>
     <span class="p">{</span>
-        <span class="c1">//take next from the left pile
-</span>        <span class="k">if</span> <span class="p">(</span><span class="n">arr_left</span><span class="p">[</span><span class="n">left</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">arr_right</span><span class="p">[</span><span class="n">mid</span><span class="p">])</span>
+        <span class="c1">//take next from the left pile</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">arr_left</span><span class="p">[</span><span class="n">left</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">arr_right</span><span class="p">[</span><span class="n">mid</span><span class="p">])</span>
         <span class="p">{</span>
             <span class="n">arr</span><span class="p">[</span><span class="n">sorted_posn</span><span class="p">]</span> <span class="o">=</span> <span class="n">arr_left</span><span class="p">[</span><span class="n">left</span><span class="p">];</span>
             <span class="n">left</span><span class="o">++</span><span class="p">;</span>
             <span class="n">sorted_posn</span><span class="o">++</span><span class="p">;</span>
         <span class="p">}</span>
-        <span class="k">else</span> <span class="c1">//take next from the right pile
-</span>        <span class="p">{</span>
+        <span class="k">else</span> <span class="c1">//take next from the right pile</span>
+        <span class="p">{</span>
             <span class="n">arr</span><span class="p">[</span><span class="n">sorted_posn</span><span class="p">]</span> <span class="o">=</span> <span class="n">arr_right</span><span class="p">[</span><span class="n">mid</span><span class="p">];</span>
             <span class="n">mid</span><span class="o">++</span><span class="p">;</span>
             <span class="n">sorted_posn</span><span class="o">++</span><span class="p">;</span>
         <span class="p">}</span>
     <span class="p">}</span>
 
-    <span class="c1">//if the right pile is now empty, drain the left pile
-</span>    <span class="k">while</span><span class="p">(</span><span class="n">left</span> <span class="o">&lt;</span> <span class="n">left_array_size</span><span class="p">)</span>
+    <span class="c1">//if the right pile is now empty, drain the left pile</span>
+    <span class="k">while</span><span class="p">(</span><span class="n">left</span> <span class="o">&lt;</span> <span class="n">left_array_size</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="n">arr</span><span class="p">[</span><span class="n">sorted_posn</span><span class="p">]</span> <span class="o">=</span> <span class="n">arr_left</span><span class="p">[</span><span class="n">left</span><span class="p">];</span>
         <span class="n">left</span><span class="o">++</span><span class="p">;</span>
         <span class="n">sorted_posn</span><span class="o">++</span><span class="p">;</span>
     <span class="p">}</span>
-    <span class="c1">//if the left pile is now empty, drain the right pile
-</span>    <span class="k">while</span><span class="p">(</span><span class="n">mid</span> <span class="o">&lt;</span> <span class="n">right_array_size</span><span class="p">)</span>
+    <span class="c1">//if the left pile is now empty, drain the right pile</span>
+    <span class="k">while</span><span class="p">(</span><span class="n">mid</span> <span class="o">&lt;</span> <span class="n">right_array_size</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="n">arr</span><span class="p">[</span><span class="n">sorted_posn</span><span class="p">]</span> <span class="o">=</span> <span class="n">arr_right</span><span class="p">[</span><span class="n">mid</span><span class="p">];</span>
         <span class="n">mid</span><span class="o">++</span><span class="p">;</span>
         <span class="n">sorted_posn</span><span class="o">++</span><span class="p">;</span>
     <span class="p">}</span>
-<span class="p">}</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>As the merging continues in parallel at each level across processors, the number of sorted elements doubles until finally there is a single sorted array.</p>
 
@@ -385,6 +376,8 @@
         <li class="sep">&nbsp;</li>
         <li><a class="fancy-nav" href="#">Top</a></li>
         <li class="sep">&nbsp;</li>
+        
+        <li><a class="fancy-nav" href="/projects/perf-analysis">Next&nbsp;&gt;</a></li>
         
         
     </ul>

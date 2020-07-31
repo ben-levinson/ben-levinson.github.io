@@ -16,18 +16,6 @@
 
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.png"/>
     
-    <script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-126409656-1', 'auto');
-  ga('send', 'pageview');
-
-</script>
-
-    
 
     
     <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"> </script>
@@ -96,7 +84,7 @@
 
 <h2 id="the-cpuid-instruction">The CPUID Instruction</h2>
 
-<p>As the name suggests, the CPUID instruction allows a program to peer into the black box of the CPU and get some information about it and its features. However, using CPUID is a little different from the more common x86 instructions like <code class="highlighter-rouge">add</code> or <code class="highlighter-rouge">mov</code>. The CPUID instruction is a good example why x86(-64) is called a Complex Instruction Set Computer (CISC): CPUID doesn’t take any arguments, what it does is dependent on the content of registers when CPUID runs, and its output changes the values of multiple registers. <em>All in a single instruction!</em></p>
+<p>As the name suggests, the CPUID instruction allows a program to peer into the black box of the CPU and get some information about it and its features. However, using CPUID is a little different from the more common x86 instructions like <code class="language-plaintext highlighter-rouge">add</code> or <code class="language-plaintext highlighter-rouge">mov</code>. The CPUID instruction is a good example why x86(-64) is called a Complex Instruction Set Computer (CISC): CPUID doesn’t take any arguments, what it does is dependent on the content of registers when CPUID runs, and its output changes the values of multiple registers. <em>All in a single instruction!</em></p>
 
 <p>By using CPUID and carefully following <a href="https://www.intel.com/content/dam/www/public/us/en/documents/manuals/64-ia-32-architectures-software-developer-instruction-set-reference-manual-325383.pdf">Intel’s documentation</a> (starting on page 3-190) on setting up the input and interpreting the instruction’s output, a program can determine if it should take one code branch that uses newer technology, or if it must use another branch designed for older technology.</p>
 
@@ -115,22 +103,23 @@
 8
 9
 10
-</pre></td><td class="code"><pre><span class="kt">void</span> <span class="n">__cpuid</span><span class="p">(</span>
+</pre></td><td class="code"><pre><span class="kt">void</span> <span class="nf">__cpuid</span><span class="p">(</span>
    <span class="kt">int</span> <span class="n">cpuInfo</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span>
    <span class="kt">int</span> <span class="n">function_id</span>
 <span class="p">);</span>
 
-<span class="kt">void</span> <span class="n">__cpuidex</span><span class="p">(</span>
+<span class="kt">void</span> <span class="nf">__cpuidex</span><span class="p">(</span>
    <span class="kt">int</span> <span class="n">cpuInfo</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span>
    <span class="kt">int</span> <span class="n">function_id</span><span class="p">,</span>
    <span class="kt">int</span> <span class="n">subfunction_id</span>
-<span class="p">);</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="p">);</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <figcaption>
 Source: https://msdn.microsoft.com/en-us/library/hskdteyh.aspx.
 </figcaption>
 
-<p>To summarize from Microsoft’s documentation, the values of the registers <code class="highlighter-rouge">eax</code>, <code class="highlighter-rouge">ebx</code>, <code class="highlighter-rouge">ecx</code>, and <code class="highlighter-rouge">edx</code> and returned in the cpuInfo array. The primary input value is passed in <code class="highlighter-rouge">eax</code> as function_id. An additional input value is required to access some <code class="highlighter-rouge">CPUID</code> functionality, which is passed into <code class="highlighter-rouge">ecx</code> as subfunction_id.</p>
+<p>To summarize from Microsoft’s documentation, the values of the registers <code class="language-plaintext highlighter-rouge">eax</code>, <code class="language-plaintext highlighter-rouge">ebx</code>, <code class="language-plaintext highlighter-rouge">ecx</code>, and <code class="language-plaintext highlighter-rouge">edx</code> and returned in the cpuInfo array. The primary input value is passed in <code class="language-plaintext highlighter-rouge">eax</code> as function_id. An additional input value is required to access some <code class="language-plaintext highlighter-rouge">CPUID</code> functionality, which is passed into <code class="language-plaintext highlighter-rouge">ecx</code> as subfunction_id.</p>
 
 <p>By disassembling the code, (I’ve used the 32-bit version of <a href="https://x64dbg.com/#start">x64dbg</a> here) we can get an example of how the above C++ is implemented in assembly.</p>
 
@@ -149,9 +138,10 @@ cpuid
 mov dword ptr ds:[esi],eax
 mov dword ptr ds:[esi+4],ebx
 mov dword ptr ds:[esi+8],ecx
-mov dword ptr ds:[esi+C],edx</pre></td></tr></tbody></table></code></pre></figure>
+mov dword ptr ds:[esi+C],edx
+</pre></td></tr></tbody></table></code></pre></figure>
 
-<p>As expected, the assembly moves the passes the primary input in <code class="highlighter-rouge">eax</code>, sets <code class="highlighter-rouge">ecx</code> to 0 by using xor on itself, and then uses the <code class="highlighter-rouge">CPUID</code> instruction. Lines 4-7 are storing the values of <code class="highlighter-rouge">eax</code>, <code class="highlighter-rouge">ebx</code>, <code class="highlighter-rouge">ecx</code>, and <code class="highlighter-rouge">edx</code> respectively in the output array. The value of <code class="highlighter-rouge">esi</code> a pointer to the first element of the array. Indices 1, 2, and 3 are each offset by 4 bytes from the previous array index.</p>
+<p>As expected, the assembly moves the passes the primary input in <code class="language-plaintext highlighter-rouge">eax</code>, sets <code class="language-plaintext highlighter-rouge">ecx</code> to 0 by using xor on itself, and then uses the <code class="language-plaintext highlighter-rouge">CPUID</code> instruction. Lines 4-7 are storing the values of <code class="language-plaintext highlighter-rouge">eax</code>, <code class="language-plaintext highlighter-rouge">ebx</code>, <code class="language-plaintext highlighter-rouge">ecx</code>, and <code class="language-plaintext highlighter-rouge">edx</code> respectively in the output array. The value of <code class="language-plaintext highlighter-rouge">esi</code> a pointer to the first element of the array. Indices 1, 2, and 3 are each offset by 4 bytes from the previous array index.</p>
 
 <p>For a given input, each of the four registers contains 32 bits that can be used as flags to indicate the support of a certain feature. We can mask off that bit and reference the documentation to generate a true/false list of supported features.</p>
 

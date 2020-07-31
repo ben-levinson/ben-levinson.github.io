@@ -16,18 +16,6 @@
 
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.png"/>
     
-    <script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-126409656-1', 'auto');
-  ga('send', 'pageview');
-
-</script>
-
-    
 
     
     <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"> </script>
@@ -186,7 +174,7 @@
 
 <p>The exact values of the hyperparameters for slack and gamma have a signficant impact on the peformance of the model. Initially, an exponential range of values were tried for each parameter independently until an approximate order of magnitude that performed decently was established. It so happened that the best approximate size was the values used to generate the plot in the previous part.</p>
 
-<p>For both hyperparameters C and gamma a list was generated that included approximately +/- 20% of the values tried in the previous part. Since the parameters C and gamma are independent of each other, all <script type="math/tex">O(N^2)</script> of these combinations will be evaluated. This was achieved with 2 nested loops to iterate through the established trial values of C and gamma. On each loop iteration an SVM was trained and its accuracy on the testing set was computed. The result of this experiment is plotted in the graph below:</p>
+<p>For both hyperparameters C and gamma a list was generated that included approximately +/- 20% of the values tried in the previous part. Since the parameters C and gamma are independent of each other, all \(O(N^2)\) of these combinations will be evaluated. This was achieved with 2 nested loops to iterate through the established trial values of C and gamma. On each loop iteration an SVM was trained and its accuracy on the testing set was computed. The result of this experiment is plotted in the graph below:</p>
 
 <figure>
     <img alt="SVM accuracy as a function of hyperparameters" src="/resources/images/mnist-comp/svm_accuracy_hyperparameter.png" />
@@ -199,7 +187,7 @@
 
 <h4 id="svm-resuts">SVM Resuts</h4>
 
-<p>The table shown below is a confusion matrix of the SVM classifier with the hyperparameter values of <script type="math/tex">C=1.15</script> and <script type="math/tex">\gamma=0.04</script>. The overall accuracy of the classifier was 97.18%. The confusion matrix is a useful evaluation tool as it also shows the predicted labels for all images in testing set.</p>
+<p>The table shown below is a confusion matrix of the SVM classifier with the hyperparameter values of \(C=1.15\) and \(\gamma=0.04\). The overall accuracy of the classifier was 97.18%. The confusion matrix is a useful evaluation tool as it also shows the predicted labels for all images in testing set.</p>
 
 <figure>
     <img alt="SVM confusion matrix" src="/resources/images/mnist-comp/svm_confusion_matrix.png" />
@@ -266,7 +254,7 @@
 
 <h2 id="discussion">Discussion</h2>
 
-<p>Using a KNN resulted in an error of 3.73% with K=4 neighbors and a training size of 30,000 and testing size of 10,000. The support vector machine constructed resulted in an error of 3.52% with C=1.150000 and gamma= 0.040000 using the radial basis function as the kernel. To find an optimal hyperparameter for the KNN is an <script type="math/tex">O(N)</script> process, whereas finding the combination of both hyperparameters for the SVM is an <script type="math/tex">O(N^2)</script> process. For this reason even with a training size of 10,000 and a testing size of 1,000 the training process for the SVM takes considerably longer.</p>
+<p>Using a KNN resulted in an error of 3.73% with K=4 neighbors and a training size of 30,000 and testing size of 10,000. The support vector machine constructed resulted in an error of 3.52% with C=1.150000 and gamma= 0.040000 using the radial basis function as the kernel. To find an optimal hyperparameter for the KNN is an \(O(N)\) process, whereas finding the combination of both hyperparameters for the SVM is an \(O(N^2)\) process. For this reason even with a training size of 10,000 and a testing size of 1,000 the training process for the SVM takes considerably longer.</p>
 
 <p>While the SVM performed slightly better than the KNN, it comes at the cost of significantly increased training time and the additional complexity of selecting a kernel function. However, once trained this disadvantage is not as much of an issue. By the fact that there were 2 independent parameters to be evaluated for the SVM, there is more granularity in adapting the SVM to solving this problem. Another likely reason for the SVM’s outperformance of the KNN has to do with how the hyperparameters function within the algorithm.</p>
 
@@ -290,7 +278,7 @@
 <p>The AdaBoost algorithm is a meta-algorithm, that is it is an algorithm to apply on top of another algorithm. The results of boosting a SVM will be shown in the next section.</p>
 
 <h4 id="boosting-a-svm">Boosting a SVM</h4>
-<p>The SVM used with Adaboost used the radial basis function with <script type="math/tex">C=1.15</script> and <script type="math/tex">\gamma=0.04</script> as found previously. This boosted SVM had an error rate of 16.45%. This boosted classifier does not outperform either the SVM or the KNN as described previously (3.52%) and (3.72%) respectively.  It should also be noted that an SVM with the linear kernel and the default C value was also tried. This variation of the classifier took less time to run the experiment and resulted in a very similar error rate of 16.21%. The data shown in the confusion matrix below is from the SVM trained with the radial basis function and <script type="math/tex">C=1.15</script>, <script type="math/tex">\gamma=0.04</script>.</p>
+<p>The SVM used with Adaboost used the radial basis function with \(C=1.15\) and \(\gamma=0.04\) as found previously. This boosted SVM had an error rate of 16.45%. This boosted classifier does not outperform either the SVM or the KNN as described previously (3.52%) and (3.72%) respectively.  It should also be noted that an SVM with the linear kernel and the default C value was also tried. This variation of the classifier took less time to run the experiment and resulted in a very similar error rate of 16.21%. The data shown in the confusion matrix below is from the SVM trained with the radial basis function and \(C=1.15\), \(\gamma=0.04\).</p>
 
 <figure>
     <img alt="adaboost svm confusion" src="/resources/images/mnist-comp/adaboost_svm_confusion.png" />
