@@ -14,4 +14,4 @@ Over the past few years I've done hardware and software for various embedded sys
 
 I completed my M.S. in Computer Engineering in 2019 at Northwestern University doing research on performance modeling of virtual to physical address translation with Prof. Nikos Hardavellas. I also served as a Peer Mentor (TA) for Intro to Computer Systems from Sept. 2017 - June 2019.
 
-I worked as a Pre-Si CPU Architectural Validation Engineer on the E-core team at Intel from July 2019 - May 2023. 
+I worked as a Pre-Si CPU Architectural Validation Engineer on the E-core team at Intel from July 2019 - May 2023. I am currently working as a CPU Design Verification Engineer at Apple. 
